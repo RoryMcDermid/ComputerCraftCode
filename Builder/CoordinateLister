@@ -1,0 +1,65 @@
+peripheral.find("modem", rednet.open)
+
+
+local coordinates = {}
+
+local function addCoordinate(xIn,yIn)
+    table.insert(coordinates, {x = xIn, y = yIn, value = xIn + yIn})
+end
+
+
+local function coordSort(coordA, coordB)
+    if coordA.value == coordB.value then
+        return coordA.x > coordB.x
+    else
+        return coordA.value < coordB.value
+    end
+
+end
+
+print("What is the maximum X coordinate")
+local inputX = io.read()
+print("What is the maximum Y coordinate")
+local inputY = io.read()
+
+for i = 0,inputX do
+    for j = 0,inputY do
+        addCoordinate(i,j)
+    end
+end
+
+local function printPoints()
+    for i, point in ipairs(coordinates) do
+        print("Point " .. i .. ": (" .. point.x .. ", " .. point.y .. "), Value: " .. point.value)
+    end
+end
+
+table.sort(coordinates, coordSort)
+
+
+while #coordinates > 0 do
+
+    id, message = rednet.receive("Get Point")
+
+    os.sleep(1)
+
+    if message == "Get Current Point" then
+        rednet.send(id, coordinates[1].x .. "," .. coordinates[1].y)
+        print(coordinates[1].x .. "," .. coordinates[1].y)
+    end
+
+    if message == "Get Next Point" then
+        table.remove(coordinates, 1)
+
+        if #coordinates == 0 then
+            rednet.send(id, -1 .. "," .. -1)
+            print("Should end here")
+        else
+
+            rednet.send(id, coordinates[1].x .. "," .. coordinates[1].y)
+            print(coordinates[1].x .. "," .. coordinates[1].y)
+        end
+    end
+
+end
+
