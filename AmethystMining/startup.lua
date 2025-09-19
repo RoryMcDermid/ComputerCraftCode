@@ -1,4 +1,3 @@
-
 --this is run when there is space above
 local function CircleMineUp() 
   turtle.up()
@@ -24,11 +23,10 @@ end
 
 
 --Code Starts
-
+print("test")
 GoDown()
 while true do
   local boolean Space = true
-
   for i = 1,16 do
     if turtle.getItemCount(i) > 0 then
       turtle.select(i)
@@ -39,9 +37,13 @@ while true do
     end
   end
   turtle.select(1)
-  sleep(300)
-  if Space == True then
-    while turtle.getItemCount(16) == 0 and not turtle.detectUp() do
+  print(Space)
+  print((turtle.getItemCount(16) == 0))
+  print((not turtle.detectUp()))
+  print("A")
+  if Space then
+    print("check")
+    while turtle.getItemCount(16) == 0 and (not turtle.detectUp()) do
       CircleMineUp()
     end
     GoDown()
