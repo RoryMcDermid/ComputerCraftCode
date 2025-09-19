@@ -40,7 +40,7 @@ while true do
   end
   turtle.select(1)
   sleep(300)
-  if Space = True then
+  if Space == True then
     while turtle.getItemCount(16) == 0 and not turtle.detectUp() do
       CircleMineUp()
     end
