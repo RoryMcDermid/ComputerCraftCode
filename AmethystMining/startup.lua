@@ -1,27 +1,26 @@
 --this is run when there is space above
-local function CircleMineUp() 
-  turtle.up()
-  for i = 0,4 do
+local function CircleMine() 
+  for i = 1,4 do
     local success, data = turtle.inspect()
     if success then
       --likely spot to break, needs tested
-      if data.name == "amethyst_cluster" then
+      if data.name == "minecraft:amethyst_cluster" then
         turtle.dig()
       end
     end
     turtle.turnLeft()
   end
 end
-
+ 
 local function GoDown()
   while not turtle.detectDown() do
     turtle.down()
   end
 end
-    
-
-
-
+ 
+ 
+ 
+ 
 --Code Starts
 print("test")
 GoDown()
@@ -37,18 +36,15 @@ while true do
     end
   end
   turtle.select(1)
-  print(Space)
-  print((turtle.getItemCount(16) == 0))
-  print((not turtle.detectUp()))
-  print("A")
+  sleep(300)
   if Space then
-    print("check")
     while turtle.getItemCount(16) == 0 and (not turtle.detectUp()) do
-      CircleMineUp()
+      CircleMine()
+      turtle.up()
+    end
+    if turtle.getItemCount(16) == 0 then
+      CircleMine()
     end
     GoDown()
   end
 end
-      
-  
-  
