@@ -6,7 +6,7 @@ local function CircleMineUp()
     local success, data = turtle.inspect()
     if success then
       --likely spot to break, needs tested
-      if data.name = "amethyst_cluster" then
+      if data.name == "amethyst_cluster" then
         turtle.dig()
       end
     end
